@@ -1,5 +1,9 @@
 Symfony\Cmf\Bundle\RoutingAutoBundle\Tests\Resources\Document\Blog:
-    uri_schema: /blog/{blog_title}
+    uri_schema: 
+        frontend:
+            uri_schema: /blog/{blog_title}
+            defaults:
+                _controller: BlogController
     token_providers:
         blog_title: [content_method, { method: getTitle } ]
 
@@ -12,7 +16,19 @@ Symfony\Cmf\Bundle\RoutingAutoBundle\Tests\Resources\Document\Post:
         post_title: [content_method, { method: getTitle } ]
 
 Symfony\Cmf\Bundle\RoutingAutoBundle\Tests\Resources\Document\Article:
-    uri_schema: /articles/{article_locale}/{article_title}
+    definitions: 
+        view:
+            uri_schema: /articles/{article_locale}/{article_title}
+            defaults:
+                _type: article_view
+        edit:
+            uri_schema: /articles/{article_locale}/{article_title}-edit
+            defaults:
+                _type: article_edit
+        review:
+            uri_schema: /articles/{article_locale}/{article_title}-review
+            defaults:
+                _type: article_review
     token_providers:
         article_title: [content_method, { method: getTitle } ]
         article_locale: [content_locale, {} ]
