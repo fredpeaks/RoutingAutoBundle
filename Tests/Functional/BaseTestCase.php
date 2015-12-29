@@ -16,31 +16,11 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase as TestingBaseTestCase
 
 class BaseTestCase extends TestingBaseTestCase
 {
-    public function setUp(array $options = array(), $routebase = null)
-    {
-        $session = $this->getContainer()->get('doctrine_phpcr.session');
-
-        if ($session->nodeExists('/test')) {
-            $session->getNode('/test')->remove();
-        }
-
-        if (!$session->nodeExists('/test')) {
-            $session->getRootNode()->addNode('test', 'nt:unstructured');
-            $session->getNode('/test')->addNode('auto-route');
-        }
-
-        $session->save();
-    }
 
     public function getApplication()
     {
         $application = new Application(self::$kernel);
 
         return $application;
-    }
-
-    public function getDm()
-    {
-        return $this->db('PHPCR')->getOm();
     }
 }
