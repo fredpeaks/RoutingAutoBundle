@@ -82,10 +82,7 @@
         </service>
 
         <service id="cmf_routing_auto.metadata.factory"
-            class="%cmf_routing_auto.metadata.factory.class%"
-            factory-service="cmf_routing_auto.metadata.factory.builder"
-            factory-method="getMetadataFactory"
-            />
+            class="%cmf_routing_auto.metadata.factory.class%" />
 
         <!-- Controller -->
         <service 

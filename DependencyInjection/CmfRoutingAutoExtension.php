@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
@@ -36,6 +37,18 @@ class CmfRoutingAutoExtension extends Extension
         $config = $processor->processConfiguration($configuration, $configs);
 
         $resources = array();
+
+        // to support both Symfony 2.x and 3
+        $definition = $container->getDefinition('cmf_routing_auto.metadata.factory');
+        if (method_exists($definition, 'setFactory')) {
+            $definition->setFactory(array(
+                new Reference('cmf_routing_auto.metadata.factory.builder'),
+                'getMetadataFactory'
+            ));
+        } else {
+            $definition->setFactoryService('cmf_routing_auto.metadata.factory.builder')
+                ->setFactoryMethod('getMetadataFactory');
+        }
 
         // auto mapping
         if ($config['auto_mapping']) {
