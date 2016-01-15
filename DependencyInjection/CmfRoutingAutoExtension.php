@@ -65,6 +65,13 @@ class CmfRoutingAutoExtension extends Extension
                 $adapterName = 'doctrine_phpcr_odm';
             }
             $container->setParameter('cmf_routing_auto.persistence.phpcr.route_basepath', $config['persistence']['phpcr']['route_basepath']);
+        } elseif ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
+            $hasProvider = true;
+            $container->setParameter('cmf_routing_auto.dynamic.persistence.orm.manager_name', $config['persistence']['orm']['manager_name']);
+            $loader->load('orm.xml');
+            if (null === $adapterName) {
+                $adapterName = 'doctrine_orm';
+            }
         }
 
         if (false === $hasProvider && null === $adapterName) {

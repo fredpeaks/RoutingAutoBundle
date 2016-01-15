@@ -57,22 +57,28 @@ HERE
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $manager = $container->get('doctrine_phpcr');
+        $persistenceType = $container->getParameter('cmf_routing_auto.persistence_type');
+        if('Phpcr' === $persistenceType) {
+            $manager = $container->get('doctrine_phpcr');
+        } else {
+            $manager = $container->get('doctrine');
+        }
+        $om = $manager->getManager();
         $factory = $container->get('cmf_routing_auto.metadata.factory');
         $arm = $container->get('cmf_routing_auto.auto_route_manager');
-
-        $dm = $manager->getManager();
-        $uow = $dm->getUnitOfWork();
 
         $session = $input->getOption('session');
         $dryRun = $input->getOption('dry-run');
         $class = $input->getOption('class');
         $verbose = $input->getOption('verbose');
 
-        DoctrineCommandHelper::setApplicationPHPCRSession(
-            $this->getApplication(),
-            $session
-        );
+        if('Phpcr' === $persistenceType) {
+            $uow = $om->getUnitOfWork();
+            DoctrineCommandHelper::setApplicationPHPCRSession(
+                $this->getApplication(),
+                $session
+            );
+        }
 
         if ($class) {
             $mapping = array($class => $class);
@@ -83,13 +89,22 @@ HERE
         foreach (array_keys($mapping) as $classFqn) {
             $output->writeln(sprintf('<info>Processing class: </info> %s', $classFqn));
 
-            $qb = $dm->createQueryBuilder();
-            $qb->from()->document($classFqn, 'a');
+            if('Phpcr' === $persistenceType) {
+                $qb = $om->createQueryBuilder();
+                $qb->from()->document($classFqn, 'a');
+            } else {
+                $repo = $om->getRepository($classFqn);
+                $qb = $repo->createQueryBuilder('a');
+            }
             $q = $qb->getQuery();
             $result = $q->getResult();
 
             foreach ($result as $autoRouteableDocument) {
-                $id = $uow->getDocumentId($autoRouteableDocument);
+                if('Phpcr' === $persistenceType) {
+                    $id = $uow->getDocumentId($autoRouteableDocument);
+                } else {
+                    $id = $autoRouteableDocument->getId();
+                }
                 $output->writeln('  <info>Refreshing: </info>'.$id);
 
                 $uriContextCollection = new UriContextCollection($autoRouteableDocument);
@@ -97,8 +112,12 @@ HERE
 
                 foreach ($uriContextCollection->getUriContexts() as $uriContext) {
                     $autoRoute = $uriContext->getAutoRoute();
-                    $dm->persist($autoRoute);
-                    $autoRouteId = $uow->getDocumentId($autoRoute);
+                    $om->persist($autoRoute);
+                    if('Phpcr' === $persistenceType) {
+                        $autoRouteId = $uow->getDocumentId($autoRoute);
+                    } else {
+                        $autoRouteId = $autoRoute->getId();
+                    }
 
                     if ($verbose) {
                         $output->writeln(sprintf(
@@ -110,7 +129,7 @@ HERE
                     }
 
                     if (true !== $dryRun) {
-                        $dm->flush();
+                        $om->flush();
                     }
                 }
             }

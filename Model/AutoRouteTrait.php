@@ -11,16 +11,9 @@
 
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Model;
 
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 
-/**
- * Sub class of Route to enable automatically generated routes
- * to be identified.
- *
- * @author Daniel Leech <daniel@dantleech.com>
- */
-class AutoRoute extends Route implements AutoRouteInterface
+trait AutoRouteTrait
 {
     const DEFAULT_KEY_AUTO_ROUTE_TAG = '_auto_route_tag';
 

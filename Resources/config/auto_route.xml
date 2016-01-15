@@ -5,7 +5,6 @@
 
     <parameters>
 
-        <parameter key="cmf_routing_auto.phpcrodm_auto_route_listener.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Phpcr\AutoRouteListener</parameter>
         <parameter key="cmf_routing_auto.auto_route_manager.class">Symfony\Cmf\Component\RoutingAuto\AutoRouteManager</parameter>
         <parameter key="cmf_routing_auto.service_registry.class">Symfony\Cmf\Component\RoutingAuto\ServiceRegistry</parameter>
         <parameter key="cmf_routing_auto.uri_generator.class">Symfony\Cmf\Component\RoutingAuto\UriGenerator</parameter>

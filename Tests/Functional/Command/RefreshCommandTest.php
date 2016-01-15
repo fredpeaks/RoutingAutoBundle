@@ -27,7 +27,7 @@ class RefreshCommandTest extends BaseTestCase
         $blog->path = '/test/test-blog';
         $blog->title = 'Unit testing blog';
 
-        $this->getDm()->persist($blog);
+        $this->persist($blog);
 
         if ($withPosts) {
             $post = new Post();
@@ -36,11 +36,11 @@ class RefreshCommandTest extends BaseTestCase
             $post->body = 'Test Body';
             $post->blog = $blog;
             $post->date = new \DateTime('2013/03/21');
-            $this->getDm()->persist($post);
+            $this->persist($post);
         }
 
-        $this->getDm()->flush();
-        $this->getDm()->clear();
+        $this->flush();
+        $this->clear();
     }
 
     public function testCommand()
