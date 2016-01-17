@@ -10,7 +10,7 @@
 
         <field name="name" type="string" unique="true"/>
         <field name="position" type="integer"/>
-        <field name="routeContent" type="string" nullable="true"/>
+        <field name="contentCode" type="string" nullable="true"/>
         <many-to-one field="redirectRoute" target-entity="Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute"/>
     </entity>
 
