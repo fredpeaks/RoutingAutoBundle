@@ -22,7 +22,7 @@ use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
  *
  * @author Daniel Leech <daniel@dantleech.com>
  */
-class AutoRoute extends AbstractRoute implements AutoRouteInterface
+class AutoRoute extends Route implements AutoRouteInterface
 {
     //use AutoRouteTrait;
 
