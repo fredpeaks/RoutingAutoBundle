@@ -15,8 +15,6 @@ use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 
 trait AutoRouteTrait
 {
-    const DEFAULT_KEY_AUTO_ROUTE_TAG = '_auto_route_tag';
-
     /**
      * @var AutoRouteInterface
      */

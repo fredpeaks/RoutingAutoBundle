@@ -12,7 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Phpcr;
 
-use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
+//use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\AbstractRoute;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 
@@ -24,5 +24,52 @@ use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
  */
 class AutoRoute extends AbstractRoute implements AutoRouteInterface
 {
-    use AutoRouteTrait;
+    //use AutoRouteTrait;
+
+    const DEFAULT_KEY_AUTO_ROUTE_TAG = '_auto_route_tag';
+
+    /**
+     * @var AutoRouteInterface
+     */
+    protected $redirectRoute;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAutoRouteTag($autoRouteTag)
+    {
+        $this->setDefault(self::DEFAULT_KEY_AUTO_ROUTE_TAG, $autoRouteTag);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAutoRouteTag()
+    {
+        return $this->getDefault(self::DEFAULT_KEY_AUTO_ROUTE_TAG);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setType($type)
+    {
+        $this->setDefault('type', $type);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRedirectTarget($redirectRoute)
+    {
+        $this->redirectRoute = $redirectRoute;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRedirectTarget()
+    {
+        return $this->redirectRoute;
+    }
 }
