@@ -33,6 +33,7 @@ class AutoRouteListener
     /** @var OrmContentCodeResolver */
     protected $contentResolver;
     protected $postFlushDone = false;
+    protected $insertions = array();
 
     public function __construct(ContainerInterface $container)
     {
@@ -62,34 +63,12 @@ class AutoRouteListener
         $uow = $om->getUnitOfWork();
         $arm = $this->getAutoRouteManager();
         $this->contentResolver->setEntityManager($om);
-        $scheduledInserts = $uow->getScheduledEntityInsertions();
+        $this->insertions = $uow->getScheduledEntityInsertions();
         $scheduledUpdates = $uow->getScheduledEntityUpdates();
-        $updates = array_merge($scheduledInserts, $scheduledUpdates);
+//        $updates = array_merge($scheduledInserts, $scheduledUpdates);
 
-        $autoRoute = null;
-        foreach ($updates as $document) {
-            if ($this->isAutoRouteable($document)) {
-                $locale = null;
-                if(method_exists($document, 'getLocale')) {
-                    $locale = $document->getLocale();
-                }
-
-                $uriContextCollection = new UriContextCollection($document);
-                $arm->buildUriContextCollection($uriContextCollection);
-
-                // refactor this.
-                foreach ($uriContextCollection->getUriContexts() as $uriContext) {
-                    $autoRoute = $uriContext->getAutoRoute();
-                    $om->persist($autoRoute);
-                    $uow->computeChangeSets();
-                }
-
-                // reset locale to the original locale
-                if (null !== $locale) {
-                    $document->setLocale($locale);
-                    $om->refresh($document);
-                }
-            }
+        foreach ($scheduledUpdates as $document) {
+            $this->handleInsertOrUpdate($document, $arm, $om, $uow);
         }
 
         $removes = $uow->getScheduledCollectionDeletions();
@@ -114,6 +93,10 @@ class AutoRouteListener
         $arm->handleDefunctRoutes();
 
         if (!$this->postFlushDone) {
+            foreach ($this->insertions as $document) {
+                $this->handleInsertOrUpdate($document, $arm, $om);
+            }
+
             $this->postFlushDone = true;
             $om->flush();
         }
@@ -128,5 +111,43 @@ class AutoRouteListener
         } catch (ClassNotMappedException $e) {
             return false;
         }
+    }
+
+    /**
+     * @param $document
+     * @param $arm
+     * @param $om
+     * @param $uow
+     * @return mixed
+     */
+    private function handleInsertOrUpdate($document, $arm, $om, $uow = null)
+    {
+        $autoRoute = null;
+        if ($this->isAutoRouteable($document)) {
+            $locale = null;
+            if (method_exists($document, 'getLocale')) {
+                $locale = $document->getLocale();
+            }
+
+            $uriContextCollection = new UriContextCollection($document);
+            $arm->buildUriContextCollection($uriContextCollection);
+
+            // refactor this.
+            foreach ($uriContextCollection->getUriContexts() as $uriContext) {
+                $autoRoute = $uriContext->getAutoRoute();
+                $om->persist($autoRoute);
+                if(null !== $uow) {
+                    $uow->computeChangeSets();
+                }
+            }
+
+            // reset locale to the original locale
+            if (null !== $locale) {
+                $document->setLocale($locale);
+                $om->refresh($document);
+            }
+        }
+
+        return $autoRoute;
     }
 }
