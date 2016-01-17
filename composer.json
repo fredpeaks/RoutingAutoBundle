@@ -10,7 +10,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "prefer-stable": true,
+    "prefer-stable": false,
     "require": {
         "php": "^5.3.9|^7.0",
         "symfony-cmf/routing-auto": "^1.1",
