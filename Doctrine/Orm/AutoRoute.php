@@ -12,8 +12,7 @@
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm;
 
 use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RouteEntityTrait;
-use Symfony\Cmf\Bundle\RoutingBundle\Model\Route;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\AbstractRoute;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 
 /**
@@ -22,9 +21,7 @@ use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
  *
  * @author Daniel Leech <daniel@dantleech.com>
  */
-class AutoRoute extends Route implements AutoRouteInterface
+class AutoRoute extends AbstractRoute implements AutoRouteInterface
 {
-    use RouteEntityTrait;
-
     use AutoRouteTrait;
 }
