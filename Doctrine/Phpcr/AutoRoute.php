@@ -13,7 +13,7 @@
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Phpcr;
 
 //use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\AbstractRoute;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 
 /**
