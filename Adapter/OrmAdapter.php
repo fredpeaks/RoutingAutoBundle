@@ -179,7 +179,7 @@ class OrmAdapter implements AdapterInterface
     /**
      * {@inheritDoc}
      */
-    public function findRouteForUri($uri)
+    public function findRouteForUri($uri, UriContext $uriContext)
     {
         return $this->em->getRepository('Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')->findOneBy(array(
             'staticPrefix' => $uri
