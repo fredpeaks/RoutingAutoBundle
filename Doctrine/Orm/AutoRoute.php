@@ -11,7 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm;
 
-/use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
+//use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\AbstractRoute;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 
