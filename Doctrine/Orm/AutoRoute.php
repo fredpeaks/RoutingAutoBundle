@@ -70,48 +70,5 @@ class AutoRoute extends AbstractRoute implements AutoRouteInterface
     public function getRedirectTarget()
     {
         return $this->redirectRoute;
-    }/**
- * @var AutoRouteInterface
- */
-    protected $redirectRoute;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAutoRouteTag($autoRouteTag)
-    {
-        $this->setDefault(self::DEFAULT_KEY_AUTO_ROUTE_TAG, $autoRouteTag);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAutoRouteTag()
-    {
-        return $this->getDefault(self::DEFAULT_KEY_AUTO_ROUTE_TAG);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setType($type)
-    {
-        $this->setDefault('type', $type);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRedirectTarget($redirectRoute)
-    {
-        $this->redirectRoute = $redirectRoute;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRedirectTarget()
-    {
-        return $this->redirectRoute;
     }
 }
