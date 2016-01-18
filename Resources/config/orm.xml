@@ -7,7 +7,7 @@
         <parameter key="cmf_routing_auto.persistence_type">Orm</parameter>
         <parameter key="cmf_routing_auto.orm_auto_route_listener.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRouteListener</parameter>
         <parameter key="cmf_routing_auto.adapter.orm.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Adapter\OrmAdapter</parameter>
-
+        <parameter key="cmf_routing.route_entity.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\Route</parameter>
     </parameters>
 
     <services>
