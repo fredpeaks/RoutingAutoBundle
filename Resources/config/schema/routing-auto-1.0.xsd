@@ -12,7 +12,7 @@
             <xsd:element name="mapping" type="mapping" minOccurs="0" />
             <xsd:element name="persistence" type="persistence" minOccurs="0" />
         </xsd:sequence>
-
+        <xsd:attribute name="adapter" type="xsd:string" />
         <xsd:attribute name="auto-mapping" type="xsd:boolean" />
     </xsd:complexType>
 
@@ -22,6 +22,12 @@
                 <xsd:complexType>
                     <xsd:attribute name="enabled" type="xsd:boolean" />
                     <xsd:attribute name="route-basepath" type="xsd:string" />
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="orm">
+                <xsd:complexType>
+                    <xsd:attribute name="enabled" type="xsd:boolean" />
+                    <xsd:attribute name="manager-name" type="xsd:string" />
                 </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
