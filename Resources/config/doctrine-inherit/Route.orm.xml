@@ -10,8 +10,10 @@
             <discriminator-mapping value="redirect" class="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RedirectRoute" />
             <discriminator-mapping value="autoroute" class="Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute" />
         </discriminator-map>
+
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
     </entity>
+
 </doctrine-mapping>
