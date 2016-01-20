@@ -74,7 +74,7 @@ class AutoRouteListener
         $removes = $uow->getScheduledCollectionDeletions();
         foreach ($removes as $document) {
             if ($this->isAutoRouteable($document)) {
-                $referrers = $this->em->getRepository('Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')->findBy(array(
+                $referrers = $om->getRepository('Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')->findBy(array(
                     'contentCode' => $this->contentResolver->getContentCode($document)
                 ));
                 if($referrers) {
