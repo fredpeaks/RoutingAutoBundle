@@ -13,6 +13,7 @@ namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm;
 
 //use Symfony\Cmf\Bundle\RoutingAutoBundle\Model\AutoRouteTrait;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route;
 
 /**
  * Sub class of Route to enable automatically generated routes

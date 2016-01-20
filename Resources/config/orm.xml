@@ -7,7 +7,6 @@
         <parameter key="cmf_routing_auto.persistence_type">Orm</parameter>
         <parameter key="cmf_routing_auto.orm_auto_route_listener.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRouteListener</parameter>
         <parameter key="cmf_routing_auto.adapter.orm.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Adapter\OrmAdapter</parameter>
-        <parameter key="cmf_routing.route_entity.class">Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\Route</parameter>
     </parameters>
 
     <services>
@@ -15,7 +14,7 @@
         <service id="cmf_routing_auto.adapter.orm" class="%cmf_routing_auto.adapter.orm.class%">
             <argument type="service" id="doctrine"/>
             <argument>%cmf_routing_auto.dynamic.persistence.orm.manager_name%</argument>
-            <argument type="service" id="cmf_routing.orm_content_code_resolver"/>
+            <argument type="service" id="cmf_routing.orm.content_code_resolver"/>
             <tag name="cmf_routing_auto.adapter" alias="doctrine_orm" />
         </service>
 

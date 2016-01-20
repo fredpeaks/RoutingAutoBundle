@@ -16,7 +16,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
 use Gedmo\Translatable\Translatable;
-use Symfony\Cmf\Bundle\RoutingBundle\Resolver\OrmContentCodeResolver;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Resolver\ContentCodeResolver;
 use Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface;
 use Symfony\Cmf\Component\RoutingAuto\UriContext;
 use Symfony\Cmf\Bundle\RoutingBundle\Model\RedirectRoute;
@@ -34,7 +34,7 @@ class OrmAdapter implements AdapterInterface
 
     /** @var ObjectManager  */
     protected $em;
-    /** @var OrmContentCodeResolver */
+    /** @var ContentCodeResolver */
     protected $contentResolver;
     /** @var string */
     protected $autoRouteFqcn;
@@ -42,10 +42,10 @@ class OrmAdapter implements AdapterInterface
     /**
      * @param ManagerRegistry $managerRegistry
      * @param string $managerName
-     * @param OrmContentCodeResolver $contentResolver
+     * @param ContentCodeResolver $contentResolver
      * @internal param string $autoRouteFqcn The FQCN of the AutoRoute document to use
      */
-    public function __construct(ManagerRegistry $managerRegistry, $managerName, OrmContentCodeResolver $contentResolver, $autoRouteFqcn = 'Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')
+    public function __construct(ManagerRegistry $managerRegistry, $managerName, ContentCodeResolver $contentResolver, $autoRouteFqcn = 'Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')
     {
         $this->em = $managerRegistry->getManager($managerName);
 
