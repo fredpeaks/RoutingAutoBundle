@@ -15,7 +15,7 @@ namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
-use Symfony\Cmf\Bundle\RoutingBundle\Resolver\OrmContentCodeResolver;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Resolver\ContentCodeResolver;
 use Symfony\Cmf\Component\RoutingAuto\AutoRouteManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute;
@@ -30,7 +30,7 @@ use Symfony\Cmf\Component\RoutingAuto\Mapping\Exception\ClassNotMappedException;
  */
 class AutoRouteListener
 {
-    /** @var OrmContentCodeResolver */
+    /** @var ContentCodeResolver */
     protected $contentResolver;
     protected $postFlushDone = false;
     protected $insertions = array();
@@ -38,7 +38,7 @@ class AutoRouteListener
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->contentResolver = $container->get('cmf_routing.orm_content_code_resolver');
+        $this->contentResolver = $container->get('cmf_routing.orm.content_code_resolver');
     }
 
     /**
@@ -88,11 +88,12 @@ class AutoRouteListener
 
     public function postFlush(PostFlushEventArgs $args)
     {
-        $om = $args->getEntityManager();
         $arm = $this->getAutoRouteManager();
         $arm->handleDefunctRoutes();
 
         if (!$this->postFlushDone) {
+            $om = $args->getEntityManager();
+
             foreach ($this->insertions as $document) {
                 $this->handleInsertOrUpdate($document, $arm, $om);
             }

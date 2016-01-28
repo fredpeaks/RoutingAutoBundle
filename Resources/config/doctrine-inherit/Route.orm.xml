@@ -3,14 +3,17 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\Route" inheritance-type="JOINED" table="orm_routes">
+    <entity name="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route" inheritance-type="SINGLE_TABLE" table="orm_routes">
         <discriminator-column name="discr" type="string" />
         <discriminator-map>
-            <discriminator-mapping value="route" class="Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\Route" />
+            <discriminator-mapping value="route" class="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Route" />
+            <discriminator-mapping value="redirect" class="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\RedirectRoute" />
             <discriminator-mapping value="autoroute" class="Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute" />
         </discriminator-map>
+
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
     </entity>
+
 </doctrine-mapping>

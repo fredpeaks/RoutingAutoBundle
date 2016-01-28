@@ -83,12 +83,18 @@ class CmfRoutingAutoBundle extends Bundle
                 $doctrineOrmCompiler::createXmlMappingDriver(
                     array(
                         realpath(
+                            __DIR__.'/Resources/config/doctrine-inherit'
+                        ) => 'Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm',
+                        realpath(
                             __DIR__.'/Resources/config/doctrine-orm'
                         ) => 'Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm',
                     ),
                     array('cmf_routing_auto.dynamic.persistence.orm.manager_name'),
                     'cmf_routing.backend_type_orm',
-                    array('CmfRoutingAutoBundle' => 'Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm')
+                    array(
+                        'CmfRoutingBundle' => 'Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm',
+                        'CmfRoutingAutoBundle' => 'Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm'
+                    )
                 )
             );
         }

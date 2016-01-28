@@ -12,7 +12,7 @@
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Cmf\Bundle\RoutingBundle\Resolver\OrmContentCodeResolver;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Orm\Resolver\ContentCodeResolver;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase as TestingBaseTestCase;
 
 class BaseTestCase extends TestingBaseTestCase
@@ -72,7 +72,7 @@ class BaseTestCase extends TestingBaseTestCase
         if(!$this->isORM) {
             return $this->getOm()->getReferrers($object);
         } else {
-            $contentResolver = new OrmContentCodeResolver();
+            $contentResolver = new ContentCodeResolver();
             return $this->getOm()->getRepository('Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')->findBy(array(
                 'contentCode' => $contentResolver->getContentCode($object)
             ));
