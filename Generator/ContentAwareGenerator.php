@@ -79,4 +79,12 @@ class ContentAwareGenerator extends BaseGenerator
 
         return reset($routes);
     }
+
+    /**
+     * We support string, empty or object as name
+     */
+    public function supports($name)
+    {
+        return is_string($name) || $name === null || $name === '' || is_object($name);
+    }
 }
