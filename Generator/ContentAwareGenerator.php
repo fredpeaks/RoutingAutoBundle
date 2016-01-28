@@ -22,34 +22,40 @@ class ContentAwareGenerator extends BaseGenerator
 
     protected function getRouteByContent($name, &$parameters)
     {
-        if ($name instanceof RouteReferrersReadInterface) {
-            $content = $name;
-        } elseif ($name instanceof AutoRouteInterface) {
-            $content = $name;
-        } elseif (isset($parameters['content_id'])) {
-            if (null !== $this->contentRepository) {
-                $content = $this->contentRepository->findById($parameters['content_id']);
-                if (empty($content)) {
-                    throw new RouteNotFoundException(
-                        'The content repository found nothing at id '.$parameters['content_id']
-                    );
-                }
-                if (!$content instanceof AutoRouteInterface && !$content instanceof RouteReferrersReadInterface) {
-                    throw new RouteNotFoundException(
-                        'Content repository did not return a RouteReferrersReadInterface or AutoRouteInterface instance for id '.$parameters['content_id']
-                    );
-                }
-            }
+        if(null != $this->adapter && is_object($name) && !$name instanceof RouteReferrersReadInterface && !isset($parameters['content_id'])) {
+            $routes = $this->adapter->getReferringAutoRoutes($name);
         } else {
-            $hint = is_object($name) ? get_class($name) : gettype($name);
-            throw new RouteNotFoundException(
-                "The route name argument '$hint' is not RouteReferrersReadInterface instance and there is no 'content_id' parameter"
-            );
+            if ($name instanceof RouteReferrersReadInterface) {
+                $content = $name;
+            } elseif (isset($parameters['content_id'])) {
+                if (null !== $this->contentRepository) {
+                    $content = $this->contentRepository->findById($parameters['content_id']);
+                    if (empty($content)) {
+                        throw new RouteNotFoundException(
+                            'The content repository found nothing at id '.$parameters['content_id']
+                        );
+                    }
+                    if (!$content instanceof RouteReferrersReadInterface) {
+                        if (null != $this->adapter) {
+                            $routes = $this->adapter->getReferringAutoRoutes($content);
+                        }
+                        if(!isset($routes) || empty($routes)) {
+                            throw new RouteNotFoundException(
+                                'Content repository did not return a RouteReferrersReadInterface or AutoRouteInterface instance for id '.$parameters['content_id']
+                            );
+                        }
+                    }
+                }
+            } else {
+                $hint = is_object($name) ? get_class($name) : gettype($name);
+                throw new RouteNotFoundException(
+                    "The route name argument '$hint' is not RouteReferrersReadInterface instance and there is no 'content_id' parameter"
+                );
+            }
         }
 
-        if ($content instanceof AutoRouteInterface) {
-            $routes = $this->adapter->getActiveReferringAutoRoutes($content);
-        } else {
+
+        if (!isset($routes) && $content instanceof RouteReferrersReadInterface) {
             $routes = $content->getRoutes();
         }
         if (empty($routes)) {
