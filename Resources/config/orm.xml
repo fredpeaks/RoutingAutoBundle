@@ -23,5 +23,6 @@
             <tag name="doctrine.event_listener" event="onFlush"/>
             <tag name="doctrine.event_listener" event="postFlush"/>
         </service>
+
     </services>
 </container>

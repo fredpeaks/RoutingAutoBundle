@@ -206,6 +206,25 @@ class PhpcrOdmAdapter implements AdapterInterface
     }
 
     /**
+     * @param $contentDocument
+     * @return array
+     */
+    public function getActiveReferringAutoRoutes($contentDocument)
+    {
+        $referrers = $this->getReferringAutoRoutes($contentDocument);
+        $routes = array();
+        if (count($referrers) > 0) {
+            foreach($referrers as $referrer) {
+                if(null === $refferer->getRedirectTarget()) {
+                    $routes[] = $referrer;
+                }
+            }
+        }
+
+        return $routes;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function findRouteForUri($uri, UriContext $uriContext)

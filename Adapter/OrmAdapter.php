@@ -12,6 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\RoutingAutoBundle\Adapter;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
@@ -173,6 +174,18 @@ class OrmAdapter implements AdapterInterface
     {
         return $this->em->getRepository('Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')->findBy(array(
             'contentCode' => $this->contentResolver->getContentCode($contentDocument, $field)
+        ));
+    }
+
+    /**
+     * @param $contentDocument
+     * @return Collection
+     */
+    public function getActiveReferringAutoRoutes($contentDocument, $field = 'id')
+    {
+        return $this->em->getRepository('Symfony\Cmf\Bundle\RoutingAutoBundle\Doctrine\Orm\AutoRoute')->findBy(array(
+            'contentCode' => $this->contentResolver->getContentCode($contentDocument, $field),
+            'redirectRoute' => null
         ));
     }
 
