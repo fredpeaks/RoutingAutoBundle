@@ -24,6 +24,8 @@ class ContentAwareGenerator extends BaseGenerator
     {
         if ($name instanceof RouteReferrersReadInterface) {
             $content = $name;
+        } elseif ($name instanceof AutoRouteInterface) {
+            $content = $name;
         } elseif (isset($parameters['content_id'])) {
             if (null !== $this->contentRepository) {
                 $content = $this->contentRepository->findById($parameters['content_id']);
