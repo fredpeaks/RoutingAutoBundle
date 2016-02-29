@@ -23,7 +23,7 @@ class ContentAwareGenerator extends BaseGenerator
     protected function getRouteByContent($name, &$parameters)
     {
         if(null != $this->adapter && is_object($name) && !$name instanceof RouteReferrersReadInterface && !isset($parameters['content_id'])) {
-            $routes = $this->adapter->getReferringAutoRoutes($name);
+            $routes = $this->adapter->getActiveReferringAutoRoutes($name);
         } else {
             if ($name instanceof RouteReferrersReadInterface) {
                 $content = $name;
@@ -37,7 +37,7 @@ class ContentAwareGenerator extends BaseGenerator
                     }
                     if (!$content instanceof RouteReferrersReadInterface) {
                         if (null != $this->adapter) {
-                            $routes = $this->adapter->getReferringAutoRoutes($content);
+                            $routes = $this->adapter->getActiveReferringAutoRoutes($content);
                         }
                         if(!isset($routes) || empty($routes)) {
                             throw new RouteNotFoundException(
