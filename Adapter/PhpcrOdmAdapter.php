@@ -227,7 +227,7 @@ class PhpcrOdmAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function findRouteForUri($uri, UriContext $uriContext)
+    public function findRouteForUri($uri)
     {
         return $this->dm->find(
             'Symfony\Cmf\Component\RoutingAuto\Model\AutoRouteInterface',
