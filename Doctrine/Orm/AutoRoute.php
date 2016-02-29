@@ -59,7 +59,7 @@ class AutoRoute extends BaseRoute implements AutoRouteInterface
     /**
      * {@inheritdoc}
      */
-    public function setRedirectTarget($redirectRoute)
+    public function setRedirectTarget(AutoRouteInterface $redirectRoute)
     {
         $this->redirectRoute = $redirectRoute;
     }
