@@ -124,14 +124,12 @@ class OrmAdapter implements AdapterInterface
      */
     public function createAutoRoute($uri, $contentDocument, $autoRouteTag)
     {
-        $segments = preg_split('#/#', $uri, null, PREG_SPLIT_NO_EMPTY);
-        $headName = array_pop($segments);
         /** @var AutoRoute $headRoute */
         $headRoute = new $this->autoRouteFqcn();
         $headRoute->setResolver($this->contentResolver);
         $headRoute->setStaticPrefix($uri);
         $headRoute->setContent($contentDocument);
-        $headRoute->setName($headName);
+        $headRoute->setName($uri);
         $headRoute->setAutoRouteTag($autoRouteTag);
         $headRoute->setType(AutoRouteInterface::TYPE_PRIMARY);
 
